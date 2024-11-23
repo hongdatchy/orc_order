@@ -12,7 +12,8 @@ crop_area_list = [
 ]
 
 def pdf_to_text(pdf_file):
-    images = pdf2image.convert_from_path(pdf_file)
+    images = pdf2image.convert_from_path(pdf_file, dpi=200)
+    # images = images
     result_queue = queue.Queue()
     
     # Use ThreadPoolExecutor to limit the number of concurrent threads

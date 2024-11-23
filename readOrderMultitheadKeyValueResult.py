@@ -2,14 +2,11 @@ import pdf2image
 import pytesseract
 import time
 from concurrent.futures import ThreadPoolExecutor
-import queue
-from collections import OrderedDict
 
 crop_area_list = [
     {"titleArea": "address1", "crop_area_coordinator": (37, 313, 738, 393)},
     {"titleArea": "address2", "crop_area_coordinator": (142, 565, 735, 660)},
     {"titleArea": "trackingNumber", "crop_area_coordinator": (200, 965, 560, 995)},
-    # ... Add more areas here ...
 ]
 
 def pdf_to_text(pdf_file):

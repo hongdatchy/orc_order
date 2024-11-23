@@ -1,6 +1,5 @@
 import pdf2image
 import pytesseract
-import time
 from concurrent.futures import ThreadPoolExecutor
 
 crop_area_list = [
@@ -38,16 +37,12 @@ def ocr_core(image, titleArea):
 
 
 def print_PDF(pdf_file):
-    start_time = time.time()
-    result_dict = pdf_to_text(pdf_file)
-    end_time = time.time()  # End time in seconds
     
-    elapsed_time = (end_time - start_time) * 1000  # Convert to milliseconds
+    result_dict = pdf_to_text(pdf_file)
     
     # In kết quả, bạn có thể lấy kết quả từ dictionary
-    for key, value in result_dict.items():
-        print(f"Title: {key}\nOCR Text: {value}\n")
+    # for key, value in result_dict.items():
+    #     print(f"Title: {key}\nOCR Text: {value}\n")
     
-    print(f"Time taken: {elapsed_time:.2f} ms")
 
-print_PDF('1234.pdf')
+# print_PDF('1234.pdf')

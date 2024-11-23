@@ -1,7 +1,5 @@
 import fitz  # PyMuPDF
 from PIL import Image
-import io
-import os
 from psd_tools import PSDImage
 
 def extract_thumbnail_from_ai(ai_file, output_file):
@@ -16,15 +14,14 @@ def extract_thumbnail_from_ai(ai_file, output_file):
     
     # Lưu ảnh ra file
     img = Image.frombytes("RGB", [pix.width, pix.height], pix.samples)
-    img.save(output_file, "PNG")
-    print(f"Thumbnail saved: {output_file}")
+    img.save(output_file, "png")
 
 # Sử dụng hàm
-extract_thumbnail_from_ai("File cut gửi anh Tính.ai", "outputFolder/ai/File cut gửi anh Tính.PNG")
+# extract_thumbnail_from_ai("File cut gửi anh Tính.ai", "outputFolder/ai/File cut gửi anh Tính.PNG")
 
 
 
-def extract_thumbnail(psd_file, output_file):
+def extract_thumbnail_from_psd(psd_file, output_file):
     # Mở file PSD
     psd = PSDImage.open(psd_file)
 
@@ -32,8 +29,7 @@ def extract_thumbnail(psd_file, output_file):
     thumbnail = psd.composite()
     
     # Lưu thumbnail ra file
-    thumbnail.save(output_file, 'PNG')
-    print(f"Thumbnail saved: {output_file}")
+    thumbnail.save(output_file, 'png')
 
 # Sử dụng hàm
-extract_thumbnail("Gửi Đức 21-12 Dương.psd", "outputFolder/psd/Gửi Đức 21-12 Dương.PNG")
+# extract_thumbnail("Gửi Đức 21-12 Dương.psd", "outputFolder/psd/Gửi Đức 21-12 Dương.PNG")

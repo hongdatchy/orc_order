@@ -1,0 +1,11 @@
+services:
+  rabbitmq:
+    image: rabbitmq:management
+    container_name: rabbitmq-custom
+    ports:
+      - "5672:5672"  # RabbitMQ AMQP protocol port
+      - "15672:15672"  # RabbitMQ Management Web UI port
+    volumes:
+      - ./create_queues.sh:/create_queues.sh  # Mount script vào container
+    entrypoint: ["sh", "-c", "chmod +x /create_queues.sh && docker-entrypoint.sh rabbitmq-server & sleep 10 && /create_queues.sh && tail -f /dev/null"]
+

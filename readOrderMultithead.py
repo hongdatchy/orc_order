@@ -48,4 +48,4 @@ def print_PDF(pdf_file):
     print(rs)
     print(f"Time taken: {elapsed_time:.2f} ms")
 
-print_PDF('1234.pdf')
+# print_PDF('1234.pdf')

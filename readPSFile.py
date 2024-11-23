@@ -33,3 +33,4 @@ def extract_thumbnail_from_psd(psd_file, output_file):
 
 # Sử dụng hàm
 # extract_thumbnail("Gửi Đức 21-12 Dương.psd", "outputFolder/psd/Gửi Đức 21-12 Dương.PNG")
+

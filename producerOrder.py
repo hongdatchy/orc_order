@@ -17,10 +17,10 @@ while True:
         "orderId": 'xyz',
         "taskId": 'fsdaf',
         "fileId": 'abc',
-        "filePath": "inputFoler/1234.pdf" if index % 2 != 0 else 
-        ("inputFoler/File cut gửi anh Tính.ai" if index % 4 == 0 else "inputFoler/Gửi Đức 21-12 Dương.psd"),
-        # "filePath": "inputFoler/test.txt" if index % 2 != 0 else 
-        # ("inputFoler/File cut gửi anh Tính.ai" if index % 4 == 0 else "inputFoler/test.txt"),
+        "filePath": "inputFolder/1234.pdf" if index % 2 != 0 else 
+        ("inputFolder/File cut gửi anh Tính.ai" if index % 4 == 0 else "inputFolder/Gửi Đức 21-12 Dương.psd"),
+        # "filePath": "inputFolder/test.txt" if index % 2 != 0 else 
+        # ("inputFolder/File cut gửi anh Tính.ai" if index % 4 == 0 else "inputFolder/test.txt"),
         "type": "ocr_label" if index % 2 != 0 else "file_thumnail"
     }
     channel.basic_publish(exchange='',

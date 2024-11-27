@@ -9,22 +9,24 @@ services:
       - ./create_queues.sh:/create_queues.sh  # Mount script vào container
     entrypoint: ["sh", "-c", "chmod +x /create_queues.sh && docker-entrypoint.sh rabbitmq-server & sleep 10 && /create_queues.sh && tail -f /dev/null"]
 
-consumerOrder:
-    image: python:3.10-slim  # Sử dụng image Python nhẹ
-    container_name: consumerOrder
+  consumerorder:
+    build: 
+      context: .  # Xây dựng container từ Dockerfile trong thư mục hiện tại
+    restart: always
+    container_name: consumerorder  # Tên container phải viết thường
     volumes:
       - ./consumerOrder.py:/app/consumerOrder.py  # Mount file script1.py vào container
+      - ./log:/app/log # Mount thư mục log từ máy chủ vào container
     working_dir: /app
     command: ["python", "consumerOrder.py"]  # Chạy script1.py
-    depends_on:
-      - rabbitmq  # Đảm bảo RabbitMQ khởi động trước
-
-consumerThumbnail:
-  image: python:3.10-slim  # Sử dụng image Python nhẹ
-  container_name: consumerThumbnail
-  volumes:
-    - ./consumerThumbnail.py:/app/consumerThumbnail.py  # Mount file script2.py vào container
-  working_dir: /app
-  command: ["python", "consumerThumbnail.py"]  # Chạy script2.py
-  depends_on:
-    - rabbitmq  # Đảm bảo RabbitMQ khởi động trước
+    
+  consumerthumbnail:
+    build: 
+      context: .  # Xây dựng container từ Dockerfile trong thư mục hiện tại
+    restart: always
+    container_name: consumerthumbnail  # Tên container phải viết thường
+    volumes:
+      - ./consumerThumbnail.py:/app/consumerThumbnail.py  # Mount file script2.py vào container
+      - ./log:/app/log # Mount thư mục log từ máy chủ vào container
+    working_dir: /app
+    command: ["python", "consumerThumbnail.py"]  # Chạy script2.py

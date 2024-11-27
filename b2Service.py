@@ -1,7 +1,6 @@
 from b2sdk.v2 import InMemoryAccountInfo, B2Api
 from concurrent.futures import ThreadPoolExecutor
 from teleBot import send_tele_message
-import json
 
 executor = ThreadPoolExecutor(max_workers=5)  
 

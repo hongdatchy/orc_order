@@ -8,7 +8,7 @@ from orcUtil.readOrderMultithead import print_PDF
 from teleBot import send_tele_message
 
 # Kết nối đến RabbitMQ server
-connection = pika.BlockingConnection(pika.ConnectionParameters('localhost'))
+connection = pika.BlockingConnection(pika.ConnectionParameters('192.168.240.174'))
 
 channel = connection.channel()
 
@@ -17,6 +17,7 @@ result = channel.queue_declare(queue='ocr_label', durable=True)
 # Hàm callback xử lý tin nhắn khi nhận được
 def callback(ch, method, properties, body):
     message = json.loads(body)
+    print(message)
     ch.basic_ack(delivery_tag = method.delivery_tag)
     try:
         # print(body)

@@ -1,0 +1,1 @@
+poetry add pdf2image pytesseract PyMuPDF Pillow b2sdk pika psd-tools python-telegram-bot

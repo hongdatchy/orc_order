@@ -9,7 +9,7 @@ from b2Service import saveToB2
 from teleBot import send_tele_message
 
 # Kết nối đến RabbitMQ server
-connection = pika.BlockingConnection(pika.ConnectionParameters('localhost'))
+connection = pika.BlockingConnection(pika.ConnectionParameters('192.168.240.174'))
 
 channel = connection.channel()
 

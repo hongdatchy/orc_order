@@ -4,3 +4,5 @@ __pycache__
 inputFolder
 dist
 log/*
+
+!log/.gitkeep 

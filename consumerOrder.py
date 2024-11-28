@@ -8,7 +8,7 @@ from orcUtil.readOrderMultithead import print_PDF
 from teleBot import send_tele_message
 
 # Kết nối đến RabbitMQ server
-connection = pika.BlockingConnection(pika.ConnectionParameters('192.168.240.174'))
+connection = pika.BlockingConnection(pika.ConnectionParameters('rabbitmq'))
 
 channel = connection.channel()
 

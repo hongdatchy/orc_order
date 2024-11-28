@@ -29,8 +29,9 @@ def upload_to_b2(img_byte_arr, file_name_on_b2, messsageJson):
         messsageStr = str(messsageJson)
         send_tele_message(messsageStr)
 
-def saveToB2(img_byte_arr, file_name, messsageJson, folder_name_b2="thbumbail"):
+def saveToB2(img_byte_arr, folder_name_b2, file_name, messsageJson):
     """ Hàm bất đồng bộ để upload file lên B2 """
+    #  file/artworks/2024/11/27/UIqPhVKIu_6DZbF92nos.wepb
     file_name_on_b2 = folder_name_b2 + "/" + file_name  # Tên file trên bucket
     
     # Sử dụng ThreadPoolExecutor để chạy hàm upload trong luồng con

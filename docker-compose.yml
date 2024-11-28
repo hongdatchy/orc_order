@@ -29,4 +29,6 @@ services:
       - ./consumerThumbnail.py:/app/consumerThumbnail.py  # Mount file script2.py vào container
       - ./log:/app/log # Mount thư mục log từ máy chủ vào container
     working_dir: /app
+    environment:
+      - PYTHONUNBUFFERED=1  # Tắt buffer của Python
     command: ["python", "consumerThumbnail.py"]  # Chạy script2.py

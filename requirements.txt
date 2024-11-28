@@ -7,3 +7,4 @@ pika
 psd-tools
 python-telegram-bot
 asyncio
+nanoid

@@ -45,7 +45,7 @@ def callback(ch, method, properties, body):
             log_file(file_name, size, start_time, end_time, message)
             image_name = generate()
             #  file/artworks/2024/11/27/UIqPhVKIu_6DZbF92nos.wepb
-            # print(image_name)
+            print(image_name)
             saveToB2(img_byte_arr, "file/artworks/" + timeToDay(start_time), image_name + ".webp", message)
             
     except Exception as e:

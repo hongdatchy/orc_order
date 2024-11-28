@@ -18,6 +18,8 @@ services:
       - ./consumerOrder.py:/app/consumerOrder.py  # Mount file script1.py vào container
       - ./log:/app/log # Mount thư mục log từ máy chủ vào container
     working_dir: /app
+    environment:
+      - PYTHONUNBUFFERED=1  # Tắt buffer của Python
     command: ["python", "consumerOrder.py"]  # Chạy script1.py
     
   consumerthumbnail:

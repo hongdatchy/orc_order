@@ -6,40 +6,77 @@ services:
   #     - "5672:5672"  # RabbitMQ AMQP protocol port
   #     - "15672:15672"  # RabbitMQ Management Web UI port
   #   volumes:
-  #     - ./create_queues.sh:/create_queues.sh  # Mount script vào container
+  #     - ./create_queues.sh:/create_queues.sh  # Mount script into container
   #   entrypoint: ["sh", "-c", "chmod +x /create_queues.sh && docker-entrypoint.sh rabbitmq-server & sleep 10 && /create_queues.sh && tail -f /dev/null"]
 
   consumerorder:
     build: 
-      context: .  # Xây dựng container từ Dockerfile trong thư mục hiện tại
+      context: . 
     restart: always
-    container_name: consumerorder  # Tên container phải viết thường
+    container_name: consumerorder 
     volumes:
-      - ./consumerOrder.py:/app/consumerOrder.py  # Mount file script1.py vào container
-      - ./log:/app/log # Mount thư mục log từ máy chủ vào container
+      - .:/app
     working_dir: /app
     environment:
-      - PYTHONUNBUFFERED=1  # Tắt buffer của Python
+      - PYTHONUNBUFFERED=1  # Turn off buffer to show log in terminal
       - RABBITMQ_USER=${RABBITMQ_USER}
       - RABBITMQ_PASSWORD=${RABBITMQ_PASSWORD}
-    command: ["python", "consumerOrder.py"]  # Chạy script1.py
+      - EXCHANGE_NAME=${EXCHANGE_NAME}
+      - EXCHANGE_TYPE=${EXCHANGE_TYPE}
+      - QUEUE_NAME_ORC_LABEL=${QUEUE_NAME_ORC_LABEL}
+      - QUEUE_NAME_FILE_THUMBNAIL=${QUEUE_NAME_FILE_THUMBNAIL}
+
+      - APP_KEY_ID=${APP_KEY_ID}
+      - APP_KEY=${APP_KEY}
+      - BUCKET_NAME=${BUCKET_NAME}
+      - AWS_S3_ENDPOINT=${AWS_S3_ENDPOINT}
+
+      - API_TOKEN=${API_TOKEN}
+      - CHAT_ID=${CHAT_ID}
+
+      - MONGO_HOST=${MONGO_HOST}
+      - MONGO_PORT=${MONGO_PORT}
+      - MONGO_USERNAME=${MONGO_USERNAME}
+      - MONGO_PASSWORD=${MONGO_PASSWORD}
+      - MONGO_DATABASE=${MONGO_DATABASE}
+      - MONGO_AUTH_SOURCE=${MONGO_AUTH_SOURCE}
+      
+    command: ["python", "consumerOrder.py"]
     networks:
       - docker_printsel
     
   consumerthumbnail:
     build: 
-      context: .  # Xây dựng container từ Dockerfile trong thư mục hiện tại
+      context: .
     restart: always
-    container_name: consumerthumbnail  # Tên container phải viết thường
+    container_name: consumerthumbnail
     volumes:
-      - ./consumerThumbnail.py:/app/consumerThumbnail.py  # Mount file script2.py vào container
-      - ./log:/app/log # Mount thư mục log từ máy chủ vào container
+      - .:/app
     working_dir: /app
     environment:
-      - PYTHONUNBUFFERED=1  # Tắt buffer của Python
+      - PYTHONUNBUFFERED=1  # Turn off buffer to show log in terminal
       - RABBITMQ_USER=${RABBITMQ_USER}
       - RABBITMQ_PASSWORD=${RABBITMQ_PASSWORD}
-    command: ["python", "consumerThumbnail.py"]  # Chạy script2.py
+      - EXCHANGE_NAME=${EXCHANGE_NAME}
+      - EXCHANGE_TYPE=${EXCHANGE_TYPE}
+      - QUEUE_NAME_ORC_LABEL=${QUEUE_NAME_ORC_LABEL}
+      - QUEUE_NAME_FILE_THUMBNAIL=${QUEUE_NAME_FILE_THUMBNAIL}
+
+      - APP_KEY_ID=${APP_KEY_ID}
+      - APP_KEY=${APP_KEY}
+      - BUCKET_NAME=${BUCKET_NAME}
+      - AWS_S3_ENDPOINT=${AWS_S3_ENDPOINT}
+
+      - API_TOKEN=${API_TOKEN}
+      - CHAT_ID=${CHAT_ID}
+
+      - MONGO_HOST=${MONGO_HOST}
+      - MONGO_PORT=${MONGO_PORT}
+      - MONGO_USERNAME=${MONGO_USERNAME}
+      - MONGO_PASSWORD=${MONGO_PASSWORD}
+      - MONGO_DATABASE=${MONGO_DATABASE}
+      - MONGO_AUTH_SOURCE=${MONGO_AUTH_SOURCE}
+    command: ["python", "consumerThumbnail.py"]
     networks:
       - docker_printsel
 networks:

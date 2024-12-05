@@ -1,41 +1,34 @@
 from b2sdk.v2 import InMemoryAccountInfo, B2Api
 from concurrent.futures import ThreadPoolExecutor
-from teleBot import send_tele_message
+
+import os
 
 executor = ThreadPoolExecutor(max_workers=5)  
 
-APP_KEY_ID = "000c16b6f8f311b0000000006"  # KeyID của bạn
-APP_KEY = "K000VVtXQv+Ngvs5F6b/LbeGl8v+AaQ"  # ApplicationKey của bạn
-BUCKET_NAME = "tebprint-test"  # Bucket của bạn
+APP_KEY_ID = os.getenv('APP_KEY_ID')
+APP_KEY = os.getenv('APP_KEY')
+BUCKET_NAME = os.getenv('BUCKET_NAME')
+AWS_S3_ENDPOINT = os.getenv('AWS_S3_ENDPOINT')
 
-# Khởi tạo B2 API
 info = InMemoryAccountInfo()
 b2_api = B2Api(info)
 b2_api.authorize_account("production", APP_KEY_ID, APP_KEY)
 
-# Lấy Bucket
+
+
 bucket = b2_api.get_bucket_by_name(BUCKET_NAME)
 
-# Khởi tạo client S3
-
-def upload_to_b2(img_byte_arr, file_name_on_b2, messsageJson):
-    """ Hàm đồng bộ upload file lên B2 """
+def upload_to_b2(img_byte_arr, file_name_on_b2):
     try:
         bucket.upload_bytes(img_byte_arr.read(), file_name_on_b2)
-        print(f"Upload file '{file_name_on_b2}' thành công")
+        return AWS_S3_ENDPOINT + "/" + BUCKET_NAME + "/" + file_name_on_b2
     except Exception as e:
-        print(f"Lỗi khi upload file")
-        messsageJson["error"] = str(e)
-        messsageStr = str(messsageJson)
-        send_tele_message(messsageStr)
+        raise Exception("Error upload to b2 " + str(e))
 
-def saveToB2(img_byte_arr, folder_name_b2, file_name, messsageJson):
-    """ Hàm bất đồng bộ để upload file lên B2 """
-    #  file/artworks/2024/11/27/UIqPhVKIu_6DZbF92nos.wepb
-    file_name_on_b2 = folder_name_b2 + "/" + file_name  # Tên file trên bucket
-    
-    # Sử dụng ThreadPoolExecutor để chạy hàm upload trong luồng con
-    executor.submit(upload_to_b2, img_byte_arr, file_name_on_b2, messsageJson)
-
-
-# saveToB2("outputFolder/psd/Gửi Đức 21-12 Dương.png", "Gửi Đức 21-12 Dương.png")
+def saveToB2(img_byte_arr, file_name_on_b2):
+    # https://s3.us-west-000.backblazeb2.com/tebprint-test/file/artworks/2024-12-03/cyN91Wm9VHlAZ33oQzW-R.webp
+    future = executor.submit(upload_to_b2, img_byte_arr, file_name_on_b2)
+    try:
+        return future.result()
+    except Exception as e:
+        raise e
